@@ -1,24 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { ChangeEvent, MouseEvent, FC, useState } from 'react';
 import './App.css';
+import TodoList from './components/TodoList';
+import { ITasK } from './interfaces';
 
-function App() {
+const  App:FC =()=> {
+  const [task, setTask] = useState<string>("")
+  const [deadline, setDeadline] = useState<number>(0)
+  const [todoList, setTodoList] = useState<ITasK[]>([])
+
+  const handleChange = (event:ChangeEvent<HTMLInputElement>):void=>{
+     if(event.target.name === "task"){
+       setTask(event.target.value)
+     }else{
+       setDeadline(Number(event.target.value))
+     }
+  }
+
+  const addTask = (event:MouseEvent<HTMLButtonElement>):void=>{
+    event.preventDefault()
+    setTodoList([...todoList, {taskName:task, deadline:deadline}])
+    setTask("")
+    setDeadline(0)
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header className='header'>
+          <form action="">
+          <div className='form-control'>
+           <input required  type="text" name="task" value={task} placeholder='Task...' onChange={handleChange}/>
+           <input required type="number" name="deadline" value={deadline} placeholder='Deadline...' onChange={handleChange}/>
+          </div>
+          <button type='submit' className='btn' onClick={addTask}>Add Task</button>
+          </form>
       </header>
+      <TodoList todoList={todoList}/>
     </div>
   );
 }
