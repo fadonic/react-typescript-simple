@@ -9,7 +9,7 @@ interface Props{
 const TodoItem:FC<Props> = ({task}) => {
   return (
    <div className='task'>
-      <div className='task-item'>
+    <div className='task-item'>
       <span>{task.taskName}</span>
       <span>{task.deadline}</span>
     </div>

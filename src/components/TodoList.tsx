@@ -9,7 +9,7 @@ interface Props{
 
 const TodoList:FC<Props> = ({todoList}:Props) => {
   return (
-    <div className='todo-list'>
+    <div className='task-list'>
       {todoList.map(task=>{
         return <TodoItem task={task} />
       })}
